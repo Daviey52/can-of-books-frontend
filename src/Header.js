@@ -14,10 +14,10 @@ class Header extends React.Component {
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand>My Favorite Books</Navbar.Brand>
-        <Link to="/">Home</Link>
-        <Link to="/profile">Profile</Link>
-        {/* TODO: if the user is logged in, render the `LogoutButton` - if the user is logged out, render the `LoginButton` */}
-        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        <Link className="home" to="/">Home</Link>
+        <Link className="profile" to="/profile">Profile</Link>
+        {/* Done: if the user is logged in, render the `LogoutButton` - if the user is logged out, render the `LoginButton` */}
+        {isAuthenticated ? <LogoutButton className="button" /> : <LoginButton className="button" />}
       </Navbar>
     );
   }

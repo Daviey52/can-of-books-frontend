@@ -5,3 +5,13 @@ a{
 a:hover{
   color:darkgrey;
 }
+button{
+  margin-left:30px ;
+}
+
+.profile{
+  margin-left: 20px;
+}
+.home{
+  margin-left: 10px;
+}
