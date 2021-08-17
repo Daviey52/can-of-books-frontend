@@ -9,7 +9,7 @@ class Profile extends React.Component {
   makerServerRequest = async () => {
     const { getIdTokenClaims } = this.props.auth0;
     let tokenClaims = await getIdTokenClaims();
-    const jwt = tokenClaims._raw;
+    const jwt = tokenClaims.__raw;
 
     const config = {
       headers: { "Authorization": `Bearer ${jwt}` },
