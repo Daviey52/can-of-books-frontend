@@ -17,7 +17,7 @@ Clone this repo to your own account with the green "Use this template" button. T
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
-This is an app that use Auth0 to log in a user and allow them to access resources on the site
+This is an app that use Auth0 to log in a user and allow them to access resources on the site. Resource include books that have been persisted using NoSQL databse
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
@@ -35,6 +35,7 @@ Technologies used for this app include React , JavaScript. Libraries include axi
 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
 
 At 8/15/2021 08:am The application allows users to use Auth0 and view information contained in the page.
+At 8/18/2021 10:00pm The application allow user to view books that have been persisted by MongoDB
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
@@ -45,12 +46,12 @@ For each of the lab features, make an estimate of the time it will take you to c
 
 Name of feature: Auth0
 
-Estimate of time needed to complete: 5 hrs
+Estimate of time needed to complete: 1 hrs
 
 Start time: 03:00
 
 Finish time: 07:00
 
-Actual time needed to complete: 4
+Actual time needed to complete: 1:20 hrs
 
-![UML pic](./src/Lab11%20-%20UML.png)
+![UML pic](./src/Lab12%20-%20UML.png)
