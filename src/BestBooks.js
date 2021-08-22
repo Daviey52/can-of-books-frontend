@@ -7,12 +7,13 @@ import Button from 'react-bootstrap/Button';
 import { withAuth0 } from '@auth0/auth0-react';
 // import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
+import BooksForm from './BooksForm';
 
 class BestBooks extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
     }
   }
   componentDidMount = async () => {
@@ -28,8 +29,34 @@ class BestBooks extends React.Component {
       books: serverResponse.data
     })
     console.log(this.state.books)
+  }
+  handleCreateBook = async (bookInfo) => {
+    try {
+      let result = await axios.post('http://localhost:3001/books', bookInfo);
+      const newBook = result.data;
+      this.setState({
+        books: [...this.state.books, newBook],
+      })
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  handleDeleteBook = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/books/${id}`);
+      let remainingBooks = this.state.books.filter(book => book._id !== id)
+      this.setState({
+        books: remainingBooks
+      })
+
+    } catch (err) {
+      console.log(err)
+    }
 
   }
+
+
 
   // makerServerRequest = async () => {
   //   const { getIdTokenClaims } = this.props.auth0;
@@ -72,19 +99,23 @@ class BestBooks extends React.Component {
         {/* {this.state.books.length > 0 ? booksToRender : " "} */}
         {
           this.state.books.length > 0 &&
-          this.state.books.map((book, index) => (
-            <Card key={index}>
+          this.state.books.map((book) => (
+            <Card key={book._id}>
               <Card.Body>
                 <Card.Text>{book.title}</Card.Text>
                 <Card.Text>{book.author}</Card.Text>
                 <Card.Text>{book.description}</Card.Text>
                 <Card.Text>{book.status}</Card.Text>
                 <Card.Text>{book.email}</Card.Text>
+                <Button variant="danger" onClick={() => this.handleDeleteBook(book._id)}>
+                  Delete Book
+                </Button>
               </Card.Body>
 
             </Card>
           ))
         }
+        <BooksForm handleCreateBook={this.handleCreateBook} />
       </Jumbotron >
     )
   }
