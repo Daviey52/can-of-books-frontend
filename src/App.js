@@ -11,6 +11,7 @@ import { withAuth0 } from '@auth0/auth0-react';
 import LoginButton from './LoginButton';
 import BestBooks from './BestBooks';
 import Profile from './Profile';
+
 class App extends React.Component {
 
   render() {
@@ -26,10 +27,12 @@ class App extends React.Component {
                 {/* Done: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
                 {isAuthenticated ? <BestBooks /> : <LoginButton />}
 
+
               </Route>
               {/* Done: add a route with a path of '/profile' that renders a `Profile` component */}
               <Route exact path="/profile">
                 {isAuthenticated ? <Profile /> : <LoginButton />}
+
 
               </Route>
             </Switch>
