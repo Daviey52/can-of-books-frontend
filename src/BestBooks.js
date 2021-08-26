@@ -5,15 +5,19 @@ import './BestBooks.css';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { withAuth0 } from '@auth0/auth0-react';
-// import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import BooksForm from './BooksForm';
+import Modal from 'react-bootstrap/Modal';
+import './BooksFormUpdate';
+import BooksFormUpdate from './BooksFormUpdate';
 
 class BestBooks extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       books: [],
+      showModal: false,
+      selectedBook: null
     }
   }
   componentDidMount = async () => {
@@ -53,41 +57,39 @@ class BestBooks extends React.Component {
     } catch (err) {
       console.log(err)
     }
-
   }
 
+  handleUpdate = async (book) => {
+    try {
+      await axios.put(`http://localhost:3001/books/${book._id}`, book);
 
-
-  // makerServerRequest = async () => {
-  //   const { getIdTokenClaims } = this.props.auth0;
-  //   let tokenClaims = await getIdTokenClaims();
-  //   const jwt = tokenClaims.__raw;
-
-  //   const config = {
-  //     headers: { "Authorization": `Bearer ${jwt}` },
-  //   }
-  //   const serverResponse = await axios.get('http://localhost:3001/books', config);
-  //   console.log('worked', serverResponse)
-  //   this.setState({
-  //     books: serverResponse.data
-  //   })
-  //   console.log(this.state.books)
-
-  // }
+      const updateBooks = this.state.books.map((stateBook) => {
+        if (stateBook._id === book._id) {
+          return book;
+        } else {
+          return stateBook
+        }
+      });
+      console.log('updatedBooks', updateBooks)
+      this.setState({ books: updateBooks })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  handleClose = () => {
+    this.setState({ showModal: false })
+  }
+  handleShow = (book) => {
+    this.setState({
+      showModal: true,
+      selectedBook: book
+    })
+  }
   render() {
+    // console.log('bookstate', this.state.selectedBook)
     const { user } = this.props.auth0;
     console.log('app', this.props.auth0, user);
 
-    // let booksToRender = this.state.books.map((book, index) => (
-
-    // <Carousel.Item key={index}>
-    //   <Carousel.Caption>
-    //     <p>{book.title}</p>
-    //     <p>{book.author}</p>
-    //     <p>{book.status}</p>
-    //   </Carousel.Caption>
-    // </Carousel.Item>
-    // ))
     return (
       <Jumbotron>
         <h1>My Favorite Books</h1>
@@ -110,12 +112,22 @@ class BestBooks extends React.Component {
                 <Button variant="danger" onClick={() => this.handleDeleteBook(book._id)}>
                   Delete Book
                 </Button>
+                <Button onClick={() => this.handleShow(book)}>
+                  Update Book
+                </Button>
               </Card.Body>
-
             </Card>
           ))
         }
         <BooksForm handleCreateBook={this.handleCreateBook} />
+
+        <Modal show={this.state.showModal} onHide={this.handleClose}>
+          <Modal.Header closeButton >
+            <Modal.Body>
+              <BooksFormUpdate selectedBook={this.state.selectedBook} handleUpdate={this.handleUpdate} handleClose={this.handleClose} />
+            </Modal.Body>
+          </Modal.Header>
+        </Modal>
       </Jumbotron >
     )
   }
